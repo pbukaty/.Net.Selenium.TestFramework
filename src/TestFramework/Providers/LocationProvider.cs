@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace Flexecash.Authorization.Framework.Providers
+namespace TestFramework.Providers
 {
     public static class LocationProvider
     {
@@ -12,7 +12,7 @@ namespace Flexecash.Authorization.Framework.Providers
         {
             if (string.IsNullOrEmpty(fileName)) throw new ArgumentException("Value cannot be null or empty.", nameof(fileName));
 
-            return Path.Combine(AssemblyLocation, $@"DataSource\{fileName}");
+            return Path.Combine(AssemblyLocation, $@"Pages\{fileName}");
         }
 
         static LocationProvider()

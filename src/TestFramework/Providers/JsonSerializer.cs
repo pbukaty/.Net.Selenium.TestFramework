@@ -3,7 +3,7 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using RestSharp.Serializers;
 
-namespace Flexecash.Authorization.Framework.Providers
+namespace TestFramework.Providers
 {
     public class JsonSerializer:ISerializer
     {
