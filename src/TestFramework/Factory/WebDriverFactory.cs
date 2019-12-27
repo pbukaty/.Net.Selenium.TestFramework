@@ -19,7 +19,6 @@ namespace TestFramework.Factory
             switch (driver)
             {
                 case "chrome":
-                    var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                     _driver = new ChromeDriver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
                     break;
                 case "firefox":
