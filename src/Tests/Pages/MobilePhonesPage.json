@@ -1,0 +1,19 @@
+﻿{
+  "Elements": [
+    {
+      "Name": "title",
+      "Properties": {
+        "Locator": "//h1[@class='schema-header__title' and text()='Мобильные телефоны']",
+        "IsMandatory": true
+      }
+    },
+    {
+      "Name": "filters",
+      "Properties": {
+        "Locator": "schema-filter",
+        "LocatorType": "Id",
+        "IsMandatory": true
+      }
+    }
+  ]
+}
