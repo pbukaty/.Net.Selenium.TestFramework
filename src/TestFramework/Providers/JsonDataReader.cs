@@ -7,11 +7,11 @@ namespace TestFramework.Providers
 {
     public class JsonDataReader
     {
-        public static Models.Pages LoadElements(string fileName)
+        public static Page LoadElements(string fileName)
         {
             if (string.IsNullOrEmpty(fileName)) throw new ArgumentException("Value cannot be null or empty.", nameof(fileName));
 
-            return Load<Models.Pages>(LocationProvider.GetFile(fileName));
+            return Load<Page>(LocationProvider.GetFile(fileName));
         }
 
         private static T Load<T>(string jsonLocation)
