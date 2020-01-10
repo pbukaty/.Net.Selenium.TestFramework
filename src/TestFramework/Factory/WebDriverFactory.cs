@@ -40,6 +40,7 @@ namespace TestFramework.Factory
             return _driver;
         }
 
+        //TODO: is it needed?
         public void Dispose()
         {
             _driver.Quit();
