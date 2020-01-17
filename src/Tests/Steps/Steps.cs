@@ -2,7 +2,6 @@
 using System.Linq;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
-using TestFramework.Factory;
 using TestFramework.PageActions;
 
 namespace Tests.Steps
@@ -11,23 +10,22 @@ namespace Tests.Steps
     public class Steps
     {
         private readonly ScenarioContext _scenarioContext;
-        private IWebDriver _driver;
         private PageActions _pageActions;
 
         public Steps(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext ?? throw new ArgumentNullException(nameof(scenarioContext));
 
-            _driver = new WebDriverFactory().SetWebDriver("chrome");
-            _driver.Manage().Window.Maximize();
+            var driver = _scenarioContext.Get<IWebDriver>("driver");
+            driver.Manage().Window.Maximize();
 
-            _pageActions = new PageActions(_driver);
+            _pageActions = new PageActions(driver);
         }
 
-        [Given(@"I navigate to page:")]
-        public void GivenINavigateToUrlOnPage(Table table)
+        [Given(@"I navigate to page '(.*)'")]
+        public void GivenINavigateToUrlOnPage(string url)
         {
-            _pageActions.NavigateToPage(_driver, table.Rows[0]["url"], table.Rows[0]["pageName"]);
+            _pageActions.NavigateToPage(url);
         }
 
         [Given(@"I click on '(.*)' element")]
@@ -51,9 +49,9 @@ namespace Tests.Steps
         }
 
         [Then(@"I verify that '(.*)' page is loaded")]
-        public void ThenIVerifyThatIsLoaded(string pageName)
+        public void ThenIVerifyThatPageIsLoaded(string pageName)
         {
-            _pageActions.VerifyPageIsLoaded(_driver, pageName);
+            _pageActions.VerifyPageIsLoaded(pageName);
         }
     }
 }

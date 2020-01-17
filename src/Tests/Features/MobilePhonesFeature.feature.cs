@@ -110,16 +110,73 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                            "url",
-                            "pageName"});
-                table1.AddRow(new string[] {
-                            "https://catalog.onliner.by/",
-                            "CatalogPage"});
 #line 6
- testRunner.Given("I navigate to page:", ((string)(null)), table1, "Given ");
+ testRunner.Given("I navigate to page \'https://catalog.onliner.by/\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
+#line 7
+ testRunner.Then("I verify that \'CatalogPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 8
+ testRunner.And("I click on \'electronics\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+                TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                            "element1",
+                            "element2",
+                            "element3"});
+                table1.AddRow(new string[] {
+                            "mobilePhones&accessories",
+                            "tv&video",
+                            "tablets&ebooks"});
 #line 9
+ testRunner.Then("I verify that elements are displayed:", ((string)(null)), table1, "Then ");
+#line hidden
+#line 12
+ testRunner.And("I moved cursor to \'mobilePhones&accessories\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 13
+ testRunner.And("I click on \'mobilePhones\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 14
+ testRunner.Then("I verify that \'MobilePhonesPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="Use mobile phones filter FAIL")]
+        [Xunit.TraitAttribute("FeatureTitle", "MobilePhonesFeature")]
+        [Xunit.TraitAttribute("Description", "Use mobile phones filter FAIL")]
+        public virtual void UseMobilePhonesFilterFAIL()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Use mobile phones filter FAIL", null, ((string[])(null)));
+#line 16
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 17
+ testRunner.Given("I navigate to page \'https://catalog.onliner.by/\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 18
+ testRunner.Then("I verify that \'CatalogPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 19
  testRunner.And("I click on \'electronics\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -130,16 +187,16 @@ this.ScenarioInitialize(scenarioInfo);
                             "mobilePhones&accessories",
                             "tv&video",
                             "tablets&ebooks"});
-#line 10
+#line 20
  testRunner.Then("I verify that elements are displayed:", ((string)(null)), table2, "Then ");
 #line hidden
-#line 13
- testRunner.And("I moved cursor to \'mobilePhones&accessories\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 23
+ testRunner.And("I moved cursor to \'mobilePhones&accessories_INVALID\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 14
+#line 24
  testRunner.And("I click on \'mobilePhones\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 15
+#line 25
  testRunner.Then("I verify that \'MobilePhonesPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
