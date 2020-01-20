@@ -29,7 +29,7 @@ namespace Tests.Steps
         }
 
         [Given(@"I click on '(.*)' element")]
-        [Then(@"I click on '(.*)' element")]
+        [When(@"I click on '(.*)' element")]
         public void GivenIClickOn(string elementName)
         {
             _pageActions.ElementClick(elementName);
@@ -42,10 +42,10 @@ namespace Tests.Steps
             _pageActions.VerifyElementsAreDisplayed(elementNames);
         }
 
-        [Then(@"I moved cursor to '(.*)' element")]
+        [When(@"I moved cursor to '(.*)' element")]
         public void ThenIMovedCursorTo(string elementName)
         {
-            _pageActions.MoveToElement(elementName);
+            _pageActions.MoveCursorToElement(elementName);
         }
 
         [Then(@"I verify that '(.*)' page is loaded")]

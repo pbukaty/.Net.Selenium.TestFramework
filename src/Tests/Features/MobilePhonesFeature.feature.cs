@@ -117,7 +117,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("I verify that \'CatalogPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 8
- testRunner.And("I click on \'electronics\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I click on \'electronics\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "element1",
@@ -131,7 +131,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("I verify that elements are displayed:", ((string)(null)), table1, "Then ");
 #line hidden
 #line 12
- testRunner.And("I moved cursor to \'mobilePhones&accessories\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I moved cursor to \'mobilePhones&accessories\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 13
  testRunner.And("I click on \'mobilePhones\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -177,21 +177,21 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Then("I verify that \'CatalogPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 19
- testRunner.And("I click on \'electronics\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I click on \'electronics\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "element1",
                             "element2",
                             "element3"});
                 table2.AddRow(new string[] {
-                            "mobilePhones&accessories",
+                            "mobilePhones&accessories_INVALID",
                             "tv&video",
                             "tablets&ebooks"});
 #line 20
  testRunner.Then("I verify that elements are displayed:", ((string)(null)), table2, "Then ");
 #line hidden
 #line 23
- testRunner.And("I moved cursor to \'mobilePhones&accessories_INVALID\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I moved cursor to \'mobilePhones&accessories_INVALID\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 24
  testRunner.And("I click on \'mobilePhones\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
