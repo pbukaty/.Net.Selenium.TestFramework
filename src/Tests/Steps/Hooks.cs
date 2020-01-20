@@ -26,6 +26,8 @@ namespace Tests.Steps
         private static string _reportPath;
         private static string _reportName;
 
+        private WebDriverUtils _driverUtils;
+
         public Hooks(ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext ?? throw new ArgumentNullException(nameof(scenarioContext));
@@ -59,6 +61,8 @@ namespace Tests.Steps
 
             _driver = new WebDriverFactory().SetWebDriver("chrome");
             _scenarioContext.Set(_driver, "driver");
+
+            _driverUtils = new WebDriverUtils(_driver);
         }
 
         [AfterStep]
@@ -144,6 +148,8 @@ namespace Tests.Steps
                     _step = _scenario.CreateNode<And>(stepDescription).Fail(scenarioContext.TestError.Message);
                     break;
             }
+
+            AddScreenshot();
         }
 
         private void SetStepInfo(ScenarioContext scenarioContext)
@@ -157,6 +163,16 @@ namespace Tests.Steps
                 _step.Info("Parameters:");
                 _step.Info(MarkupHelper.CreateTable(ConvertTableToArray(stepInfo.Table)));
             }
+        }
+
+        private void AddScreenshot()
+        {
+            var screenshotName = $"{_scenario.Model.Name}_{DateTime.Now:dd-MM-yyyy_HHmmss}";
+            _driverUtils.TakeScreenshot(screenshotName);
+
+            var mediaModel =
+                MediaEntityBuilder.CreateScreenCaptureFromPath($"{AppDomain.CurrentDomain.BaseDirectory}TestResults\\{screenshotName}.png").Build();
+            _step.Fail("Details: ", mediaModel);
         }
 
         private string[,] ConvertTableToArray(Table table)
