@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
-using FluentAssertions;
+using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using TestFramework.Extensions;
 using TestFramework.WebPages;
 
 namespace TestFramework.PageActions
@@ -9,61 +10,75 @@ namespace TestFramework.PageActions
     public class PageActions
     {
         private WebPage _webPage;
-        private readonly IWebDriver _webDriver;
+        private readonly IWebDriver _driver;
 
-        public PageActions(IWebDriver webDriver)
+        public PageActions(IWebDriver driver)
         {
-            _webDriver = webDriver;
+            _driver = driver;
         }
 
-        public void NavigateToPage(IWebDriver driver, string url, string pageName)
+        public void NavigateToPage(string url)
         {
-            driver.Navigate().GoToUrl(url);
-            VerifyPageIsLoaded(driver, pageName);
+            _driver.Navigate().GoToUrl(url);
         }
 
-        public void VerifyPageIsLoaded(IWebDriver driver, string pageName)
+        public void VerifyPageIsLoaded(string pageName)
         {
-            _webPage = new WebPage(driver, pageName);
+            _webPage = new WebPage(_driver, pageName);
 
-            _webPage.VerifyPageLoaded();
+            foreach (var item in _webPage.WebElementsDictionary.Where(e => e.Value.IsMandatory == true))
+            {
+                var element = _webPage.GetWebElement(item.Key);
+                element.Should().BeFound(item.Key,BuildErrorAdditionalInfo(item.Key));
+                element.Should().BeDisplayed(item.Key, BuildErrorAdditionalInfo(item.Key));
+            }
         }
 
         public void ElementClick(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-            element.Should().NotBeNull($"it means that '{elementName}' is not found");
+
+            element.Should().BeFound(elementName, BuildErrorAdditionalInfo(elementName));
             element.Click();
         }
 
-        public void MoveToElement(string elementName)
+        public void MoveCursorToElement(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-            element.Should().NotBeNull($"it means that '{elementName}' is not found");
-        
-            var actions = new Actions(_webDriver);
+            element.Should().BeFound(elementName,BuildErrorAdditionalInfo(elementName));
+
+            var actions = new Actions(_driver);
             actions.MoveToElement(element).Perform();
         }
 
+        //TODO: split to two methods - ?
         public void VerifyElementIsDisplayed(string elementName, bool state = true)
         {
-            var errorMessage = state ? "is not visible" : "is visible";
-
             var element = _webPage.GetWebElement(elementName);
-            element.Should().NotBeNull($"it means that '{elementName}' is not found");
-            element.Displayed.Should().Be(state, $"it means that '{elementName}' element {errorMessage}");
+            element.Should().BeFound(elementName, BuildErrorAdditionalInfo(elementName));
+
+            if (state)
+            {
+                element.Should().BeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
+            }
+            else
+            {
+                element.Should().NotBeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
+            }
         }
 
         public void VerifyElementsAreDisplayed(IList<string> elementNames, bool state = true)
         {
-            var errorMessage = state ? "is not visible" : "is visible";
-
             foreach (var elementName in elementNames)
             {
-                var element = _webPage.GetWebElement(elementName);
-                element.Should().NotBeNull($"it means that '{elementName}' is not found");
-                element.Displayed.Should().Be(state, $"it means that '{elementName}' element {errorMessage}");
+                VerifyElementIsDisplayed(elementName, state);
             }
+        }
+
+        private string BuildErrorAdditionalInfo(string elementName)
+        {
+            return
+                $" Page is '{_webPage.PageName}'; element locator: '{_webPage.WebElementsDictionary[elementName].Locator}'";
         }
     }
 }

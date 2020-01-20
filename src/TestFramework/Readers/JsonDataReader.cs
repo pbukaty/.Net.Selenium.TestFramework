@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using TestFramework.Models;
 
-namespace TestFramework.Providers
+namespace TestFramework.Readers
 {
     public class JsonDataReader
     {
@@ -11,7 +11,7 @@ namespace TestFramework.Providers
         {
             if (string.IsNullOrEmpty(fileName)) throw new ArgumentException("Value cannot be null or empty.", nameof(fileName));
 
-            return Load<Page>(LocationProvider.GetFile(fileName));
+            return Load<Page>($"{AppDomain.CurrentDomain.BaseDirectory}Pages\\{fileName}");
         }
 
         private static T Load<T>(string jsonLocation)
