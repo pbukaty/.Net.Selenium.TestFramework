@@ -7,7 +7,7 @@ namespace TestFramework.Factory
 {
     public class WebElementFactory
     {
-        public IWebElement FineWebElement(IWebDriver driver, Properties properties)
+        public IWebElement FindWebElement(IWebDriver driver, Properties properties)
         {
             var locator = properties.Locator;
             var locatorType = properties.LocatorType ?? "XPath";
