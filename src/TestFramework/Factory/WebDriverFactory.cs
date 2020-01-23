@@ -10,7 +10,7 @@ using OpenQA.Selenium.Opera;
 
 namespace TestFramework.Factory
 {
-    public class WebDriverFactory: IDisposable
+    public class WebDriverFactory
     {
         private IWebDriver _driver;
 
@@ -38,13 +38,6 @@ namespace TestFramework.Factory
             }
 
             return _driver;
-        }
-
-        //TODO: is it needed?
-        public void Dispose()
-        {
-            _driver.Quit();
-            _driver.Dispose();
         }
     }
 }
