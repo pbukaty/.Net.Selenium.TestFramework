@@ -8,8 +8,7 @@ using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using TestFramework.Factory;
 using TestFramework.Utils;
-//TODO: should be changed
-using ExtentReports1 = AventStack.ExtentReports.ExtentReports;
+using Reports = AventStack.ExtentReports.ExtentReports;
 
 namespace Tests.Steps
 {
@@ -22,7 +21,7 @@ namespace Tests.Steps
         private static ExtentTest _feature;
         private static ExtentTest _scenario;
         private static ExtentTest _step;
-        private static ExtentReports1 _extent;
+        private static Reports _extent;
         private static string _reportPath;
         private static string _reportName;
 
@@ -44,7 +43,7 @@ namespace Tests.Steps
             var htmlReporter = new ExtentHtmlReporter(_reportPath);
             htmlReporter.Config.Theme = AventStack.ExtentReports.Reporter.Configuration.Theme.Standard;
 
-            _extent = new ExtentReports1();
+            _extent = new Reports();
             _extent.AttachReporter(htmlReporter);
         }
 
@@ -85,12 +84,14 @@ namespace Tests.Steps
         {
             _driver.Quit();
 
+            //TODO: doesn't work
             _scenario.Info($"Duration: {_scenario.Model.RunDuration}");
         }
 
         [AfterFeature]
         public static void AfterFeature()
         {
+            //TODO: doesn't work
             _feature.Info($"Duration: {_feature.Model.RunDuration}");
         }
 
@@ -132,20 +133,24 @@ namespace Tests.Steps
             var stepInfo = scenarioContext.StepContext.StepInfo;
             var stepType = stepInfo.StepInstance.Keyword;
             var stepDescription = $"{stepType}{stepInfo.Text}";
+            var errorType = scenarioContext.TestError.GetType().ToString();
+            var errorMessage = scenarioContext.TestError.Message
+                .Replace("<", "[")
+                .Replace(">", "]");
 
             switch (stepType.Trim())
             {
                 case "Given":
-                    _step = _scenario.CreateNode<Given>(stepDescription).Fail(scenarioContext.TestError.Message);
+                    _step = _scenario.CreateNode<Given>(stepDescription).Fail($"{errorType}: {errorMessage}");
                     break;
                 case "When":
-                    _step = _scenario.CreateNode<When>(stepDescription).Fail(scenarioContext.TestError.Message);
+                    _step = _scenario.CreateNode<When>(stepDescription).Fail($"{errorType}: {errorMessage}");
                     break;
                 case "Then":
-                    _step = _scenario.CreateNode<Then>(stepDescription).Fail(scenarioContext.TestError.Message);
+                    _step = _scenario.CreateNode<Then>(stepDescription).Fail($"{errorType}: {errorMessage}");
                     break;
                 case "And":
-                    _step = _scenario.CreateNode<And>(stepDescription).Fail(scenarioContext.TestError.Message);
+                    _step = _scenario.CreateNode<And>(stepDescription).Fail($"{errorType}: {errorMessage}");
                     break;
             }
 
