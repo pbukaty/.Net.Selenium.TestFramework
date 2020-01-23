@@ -13,8 +13,13 @@ namespace TestFramework.Utils
 
         public void TakeScreenshot(string screenshotName)
         {
-            Screenshot screenshot = ((ITakesScreenshot) _driver).GetScreenshot();
+            var screenshot = ((ITakesScreenshot) _driver).GetScreenshot();
             screenshot.SaveAsFile($"{AppDomain.CurrentDomain.BaseDirectory}TestResults\\{screenshotName}.png");
+        }
+
+        public void ExecuteScript(IWebElement element, string script)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript(script, element);
         }
     }
 }
