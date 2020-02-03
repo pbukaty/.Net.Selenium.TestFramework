@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports.MarkupUtils;
 using AventStack.ExtentReports.Reporter;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using TestFramework.Factory;
@@ -18,8 +20,11 @@ namespace Tests.Steps
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver _driver;
 
+        [ThreadStatic]
         private static ExtentTest _feature;
+        [ThreadStatic]
         private static ExtentTest _scenario;
+        [ThreadStatic]
         private static ExtentTest _step;
         private static Reports _extent;
         private static string _reportPath;
@@ -51,12 +56,23 @@ namespace Tests.Steps
         public static void BeforeFeature(FeatureContext featureContext)
         {
             _feature = _extent.CreateTest<Feature>(featureContext.FeatureInfo.Title);
+            if (featureContext.FeatureInfo.Tags.Contains("ignoreFeature"))
+            {
+                _feature.Model.Status = Status.Skip;
+                Assert.Ignore("Ignore feature");
+            }
         }
 
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext scenarioContext)
         {
             _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
+
+            if (scenarioContext.ScenarioInfo.Tags.Contains("ignoreScenario"))
+            {
+                _scenario.Model.Status = Status.Skip;
+                Assert.Ignore("Ignore scenario");
+            }
 
             _driver = new WebDriverFactory().SetWebDriver("chrome");
             _scenarioContext.Set(_driver, "driver");
@@ -82,7 +98,7 @@ namespace Tests.Steps
         [AfterScenario]
         public void AfterScenario()
         {
-            _driver.Quit();
+            _driver?.Quit();
 
             //TODO: doesn't work
             _scenario.Info($"Duration: {_scenario.Model.RunDuration}");
