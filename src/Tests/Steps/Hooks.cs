@@ -28,9 +28,10 @@ namespace Tests.Steps
         private static ExtentTest _step;
         private static Reports _extent;
         private static string _reportPath;
-        private static string _reportName;
 
         private WebDriverUtils _driverUtils;
+
+        private DateTime _startStepTime;
 
         public Hooks(ScenarioContext scenarioContext)
         {
@@ -40,9 +41,9 @@ namespace Tests.Steps
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            _reportName = $"Report_{DateTime.Now:dd-MM-yyyy_HHmmss}.html";
+            var reportName = $"Report_{DateTime.Now:dd-MM-yyyy_HHmmss}";
 
-            _reportPath = $"{AppDomain.CurrentDomain.BaseDirectory}TestResults\\";
+            _reportPath = $"{AppDomain.CurrentDomain.BaseDirectory}TestResults\\{reportName}\\";
             FileUtils.CreateDirectory(_reportPath);
 
             var htmlReporter = new ExtentHtmlReporter(_reportPath);
@@ -80,6 +81,12 @@ namespace Tests.Steps
             _driverUtils = new WebDriverUtils(_driver);
         }
 
+        [BeforeStep]
+        public void BeforeStep(ScenarioContext scenarioContext)
+        {
+            _startStepTime = DateTime.Now;
+        }
+
         [AfterStep]
         public void InsertReportingSteps(ScenarioContext scenarioContext)
         {
@@ -96,12 +103,12 @@ namespace Tests.Steps
         }
 
         [AfterScenario]
-        public void AfterScenario()
+        public void AfterScenario(ScenarioContext scenarioContext)
         {
             _driver?.Quit();
 
             //TODO: doesn't work
-            _scenario.Info($"Duration: {_scenario.Model.RunDuration}");
+            _scenario.Pass($"Duration: {_scenario.Model.RunDuration}");
         }
 
         [AfterFeature]
@@ -116,9 +123,6 @@ namespace Tests.Steps
         {
             //Flush report once test completes
             _extent.Flush();
-
-            FileUtils.RenameFile(_reportPath, "index.html", _reportName);
-            FileUtils.RenameFile(_reportPath, "dashboard.html", $"Dashboard_{_reportName}");
         }
 
         private void CreatePassNode(ScenarioContext scenarioContext)
@@ -176,8 +180,7 @@ namespace Tests.Steps
         private void SetStepInfo(ScenarioContext scenarioContext)
         {
             var stepInfo = scenarioContext.StepContext.StepInfo;
-
-            _step.Info($"Duration: {_step.Model.RunDuration.ToString()}.");
+            _step.Info($"Duration: {DateTime.Now - _startStepTime}.");
 
             if (stepInfo.Table != null)
             {
@@ -189,10 +192,10 @@ namespace Tests.Steps
         private void AddScreenshot()
         {
             var screenshotName = $"{_scenario.Model.Name}_{DateTime.Now:dd-MM-yyyy_HHmmss}";
-            _driverUtils.TakeScreenshot(screenshotName);
+            _driverUtils.TakeScreenshot(_reportPath, screenshotName);
 
             var mediaModel =
-                MediaEntityBuilder.CreateScreenCaptureFromPath($"{AppDomain.CurrentDomain.BaseDirectory}TestResults\\{screenshotName}.png").Build();
+                MediaEntityBuilder.CreateScreenCaptureFromPath($"{_reportPath}\\{screenshotName}.png").Build();
             _step.Fail("Details: ", mediaModel);
         }
 

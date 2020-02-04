@@ -1,5 +1,4 @@
-﻿using System;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 
 namespace TestFramework.Utils
 {
@@ -11,10 +10,10 @@ namespace TestFramework.Utils
             _driver = driver;
         }
 
-        public void TakeScreenshot(string screenshotName)
+        public void TakeScreenshot(string reportPath, string screenshotName)
         {
             var screenshot = ((ITakesScreenshot) _driver).GetScreenshot();
-            screenshot.SaveAsFile($"{AppDomain.CurrentDomain.BaseDirectory}TestResults\\{screenshotName}.png");
+            screenshot.SaveAsFile($"{reportPath}\\{screenshotName}.png");
         }
 
         public void ExecuteScript(IWebElement element, string script)
