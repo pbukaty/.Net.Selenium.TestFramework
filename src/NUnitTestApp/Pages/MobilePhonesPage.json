@@ -1,0 +1,69 @@
+﻿{
+  "Elements": [
+    {
+      "Name": "title",
+      "Properties": {
+        "Locator": "//h1[@class='schema-header__title' and text()='Мобильные телефоны']",
+        "IsMandatory": true
+      }
+    },
+    {
+      "Name": "filters",
+      "Properties": {
+        "Locator": "schema-filter",
+        "LocatorType": "Id",
+        "IsMandatory": true
+      }
+    },
+    {
+      "Name": "manufacturerPopUpFilter",
+      "Properties": {
+        "Locator": "//div[@class='schema-filter-popover__title' and text()='Производитель']"
+      }
+    },
+    {
+      "Name": "xiaomiCheckBox",
+      "Properties": {
+        "Locator": "//li//input[@type='checkbox' and @value='xiaomi']"
+      }
+    },
+    {
+      "Name": "sonyCheckBox",
+      "Properties": {
+        "Locator": "input[type='checkbox'][value='sony']",
+        "LocatorType": "CssSelector"
+      }
+    },
+    {
+      "Name": "maxAmountTextBox",
+      "Properties": {
+        "Locator": "//input[@type='text' and @placeholder='до']"
+      }
+    },
+    {
+      "Name": "screenSizeMaxDropDown",
+      "Properties": {
+        "Locator": "//div[@class='schema-filter__facet' and preceding-sibling::div[@class='schema-filter__label']/span[text()='Размер экрана']]//select[contains(@data-bind,'facet.value.to')]"
+      }
+    },
+    {
+      "Name": "screenResolutionMinDropDown",
+      "Properties": {
+        "Locator": "//div[@class='schema-filter__facet' and preceding-sibling::div[@class='schema-filter__label']/span[text()='Разрешение экрана']]//select[contains(@data-bind,'facet.value.from')]"
+      }
+    },
+    {
+      "Name": "ramMinDropDown",
+      "Properties": {
+        "Locator": "//div[@class='schema-filter__facet' and preceding-sibling::div[@class='schema-filter__label']/span[text()='Оперативная память']]//select[contains(@data-bind,'facet.value.from')]"
+      }
+    },
+    {
+      "Name": "productDescription",
+      "Properties": {
+        "Locator": "span[data-bind~='product.description']",
+        "LocatorType": "CssSelector"
+      }
+    }
+  ]
+}

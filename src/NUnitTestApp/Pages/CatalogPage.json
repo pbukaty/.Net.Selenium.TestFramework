@@ -1,0 +1,49 @@
+﻿{
+  "Elements": [
+    {
+      "Name": "electronics",
+      "Properties": {
+        "Locator": "//li//span[text()='Электроника']",
+        "IsMandatory": true
+      }
+    },
+    {
+      "Name": "logo",
+      "Properties": {
+        "Locator": "onliner_logo",
+        "LocatorType": "ClassName",
+        "IsMandatory": true
+      }
+    },
+    {
+      "Name": "mobilePhones&accessories",
+      "Properties": {
+        "Locator": "//div[@class='catalog-navigation-list__aside-title' and contains(text(), 'Мобильные телефоны')]"
+      }
+    },
+    {
+      "Name": "tv&video",
+      "Properties": {
+        "Locator": "//div[@class='catalog-navigation-list__aside-title' and contains(text(), 'Телевидение')]"
+      }
+    },
+    {
+      "Name": "tablets&ebooks",
+      "Properties": {
+        "Locator": "//div[@class='catalog-navigation-list__aside-title' and contains(text(), 'Планшеты, электронные книги')]"
+      }
+    },
+    {
+      "Name": "mobilePhones",
+      "Properties": {
+        "Locator": "//div[@class='catalog-navigation-list__dropdown']//a[@href='https://catalog.onliner.by/mobile']"
+      }
+    },
+    {
+      "Name": "mobilePhones&accessories_INVALID",
+      "Properties": {
+        "Locator": "//div[@class='catalog-navigation-list__aside-title' and contains(text(), 'Мобильные телефоны111')]"
+      }
+    }
+  ]
+}
