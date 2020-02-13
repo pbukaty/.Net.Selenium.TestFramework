@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Tests.Features
+namespace SpecFlowTestApp.Features
 {
     using TechTalk.SpecFlow;
     using System;
@@ -21,12 +21,16 @@ namespace Tests.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("MobilePhonesFilters")]
+    [NUnit.Framework.CategoryAttribute("Browsers:")]
+    [NUnit.Framework.CategoryAttribute("chrome,firefox")]
     public partial class MobilePhonesFiltersFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "Browsers:",
+                "chrome,firefox"};
         
 #line 1 "MobilePhonesFilters.feature"
 #line hidden
@@ -35,7 +39,9 @@ namespace Tests.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "MobilePhonesFilters", "\tThis test feature demonstrates how to use this framework", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "MobilePhonesFilters", "\tThis test feature demonstrates how to use this framework", ProgrammingLanguage.CSharp, new string[] {
+                        "Browsers:",
+                        "chrome,firefox"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -75,15 +81,15 @@ namespace Tests.Features
         
         public virtual void FeatureBackground()
         {
-#line 4
-#line hidden
 #line 5
- testRunner.Given("I navigate to page \'https://catalog.onliner.by/mobile\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 6
- testRunner.Then("I verify that \'MobilePhonesPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Given("I navigate to page \'https://catalog.onliner.by/mobile\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 7
+ testRunner.Then("I verify that \'MobilePhonesPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 8
  testRunner.And("I verify that \'manufacturerPopUpFilter\' element is not displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -94,7 +100,7 @@ namespace Tests.Features
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Use mobile phones filter", null, ((string[])(null)));
-#line 9
+#line 10
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -114,33 +120,33 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 4
+#line 5
 this.FeatureBackground();
 #line hidden
-#line 10
+#line 11
  testRunner.When("I set \'xiaomiCheckBox\' element selected state to \'true\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 11
+#line 12
  testRunner.Then("I verify that \'xiaomiCheckBox\' element is selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 12
+#line 13
  testRunner.And("I verify that \'sonyCheckBox\' element is not selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 13
+#line 14
  testRunner.When("I type \'300\' into element \'maxAmountTextBox\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 14
+#line 15
  testRunner.And("I select \'5.8\"\' item from \'screenSizeMaxDropDown\' dropdown by \'text\' selection ty" +
                         "pe", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 15
+#line 16
  testRunner.And("I select \'2gb\' item from \'ramMinDropDown\' dropdown by \'value\' selection type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 16
+#line 17
  testRunner.And("I select \'18\' item from \'screenResolutionMinDropDown\' dropdown by \'index\' selecti" +
                         "on type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 17
+#line 18
  testRunner.Then("I verify that \'productDescription\' elements contain \'text\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

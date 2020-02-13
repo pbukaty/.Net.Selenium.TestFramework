@@ -1,4 +1,5 @@
-﻿Feature: MobilePhonesFilters
+﻿@Browsers: chrome,firefox
+Feature: MobilePhonesFilters
 	This test feature demonstrates how to use this framework
 
 Background: 

@@ -19,6 +19,8 @@ namespace Tests.Steps
     {
         private readonly ScenarioContext _scenarioContext;
         private IWebDriver _driver;
+        private WebDriverUtils _driverUtils;
+        private DateTime _startStepTime;
 
         [ThreadStatic]
         private static ExtentTest _feature;
@@ -28,10 +30,7 @@ namespace Tests.Steps
         private static ExtentTest _step;
         private static Reports _extent;
         private static string _reportPath;
-
-        private WebDriverUtils _driverUtils;
-
-        private DateTime _startStepTime;
+        private static string _driverName;
 
         public Hooks(ScenarioContext scenarioContext)
         {
@@ -41,10 +40,10 @@ namespace Tests.Steps
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
-            var reportName = $"Report_{DateTime.Now:dd-MM-yyyy_HHmmss}";
+            _driverName = Environment.GetEnvironmentVariable("driver");
+            var reportName = $"Report_{_driverName}_{DateTime.Now:dd-MM-yyyy_HHmmss}";
 
             _reportPath = $"{AppDomain.CurrentDomain.BaseDirectory}TestResults\\{reportName}\\";
-            FileUtils.CreateDirectory(_reportPath);
 
             var htmlReporter = new ExtentHtmlReporter(_reportPath);
             htmlReporter.Config.Theme = AventStack.ExtentReports.Reporter.Configuration.Theme.Standard;
@@ -67,7 +66,11 @@ namespace Tests.Steps
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext scenarioContext)
         {
-            _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
+            //TODO: need for debug
+            _driverName = "chrome";
+            //=====================
+            var scenarioTitle = scenarioContext.ScenarioInfo.Title;
+            _scenario = _feature.CreateNode<Scenario>(scenarioTitle);
 
             if (scenarioContext.ScenarioInfo.Tags.Contains("ignoreScenario"))
             {
@@ -75,9 +78,27 @@ namespace Tests.Steps
                 Assert.Ignore("Ignore scenario");
             }
 
-            _driver = new WebDriverFactory().SetWebDriver("chrome");
-            _scenarioContext.Set(_driver, "driver");
+            try
+            {
+                _driver = new WebDriverFactory().SetWebDriver(_driverName);
+            }
+            catch (ArgumentNullException ex)
+            {
+                _scenario.CreateNode<Scenario>(scenarioTitle).Fail(ex.Message);
+                Assert.Fail(ex.Message);
+            }
+            catch (NotSupportedException ex)
+            {
+                _scenario.CreateNode<Scenario>(scenarioTitle).Fail(ex.Message);
+                Assert.Fail(ex.Message);
+            }
+            catch (DriverServiceNotFoundException ex)
+            {
+                _scenario.CreateNode<Scenario>(scenarioTitle).Fail(ex.Message);
+                Assert.Fail(ex.Message);
+            }
 
+            _scenarioContext.Set(_driver, "driver");
             _driverUtils = new WebDriverUtils(_driver);
         }
 
@@ -108,7 +129,7 @@ namespace Tests.Steps
             _driver?.Quit();
 
             //TODO: doesn't work
-            _scenario.Pass($"Duration: {_scenario.Model.RunDuration}");
+            _scenario.Info($"Duration: {_scenario.Model.RunDuration}");
         }
 
         [AfterFeature]

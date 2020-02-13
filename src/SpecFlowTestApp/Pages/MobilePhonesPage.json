@@ -16,6 +16,12 @@
       }
     },
     {
+      "Name": "manufacturerPopUpFilter",
+      "Properties": {
+        "Locator": "//div[@class='schema-filter-popover__title' and text()='Производитель']"
+      }
+    },
+    {
       "Name": "xiaomiCheckBox",
       "Properties": {
         "Locator": "//li//input[@type='checkbox' and @value='xiaomi']"
@@ -55,7 +61,7 @@
     {
       "Name": "productDescription",
       "Properties": {
-        "Locator": "span[contains(@data-bind,'product.description')]",
+        "Locator": "span[data-bind~='product.description']",
         "LocatorType": "CssSelector"
       }
     }

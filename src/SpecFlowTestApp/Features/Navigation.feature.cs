@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace Tests.Features
+namespace SpecFlowTestApp.Features
 {
     using TechTalk.SpecFlow;
     using System;
@@ -21,14 +21,12 @@ namespace Tests.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("Navigation")]
-    [NUnit.Framework.CategoryAttribute("ignoreFeature")]
     public partial class NavigationFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = new string[] {
-                "ignoreFeature"};
+        private string[] _featureTags = ((string[])(null));
         
 #line 1 "Navigation.feature"
 #line hidden
@@ -37,8 +35,7 @@ namespace Tests.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Navigation", "\tThis test feature demonstrates how to use this framework", ProgrammingLanguage.CSharp, new string[] {
-                        "ignoreFeature"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Navigation", "\tThis test feature demonstrates how to use this framework", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -82,7 +79,7 @@ namespace Tests.Features
         {
             string[] tagsOfScenario = ((string[])(null));
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Mobile phone page", null, ((string[])(null)));
-#line 5
+#line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -102,13 +99,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
+#line 5
  testRunner.Given("I navigate to page \'https://catalog.onliner.by/\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 7
+#line 6
  testRunner.Then("I verify that \'CatalogPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 8
+#line 7
  testRunner.When("I click on \'electronics\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -119,16 +116,16 @@ this.ScenarioInitialize(scenarioInfo);
                             "mobilePhones&accessories",
                             "tv&video",
                             "tablets&ebooks"});
-#line 9
+#line 8
  testRunner.Then("I verify that elements are displayed:", ((string)(null)), table7, "Then ");
 #line hidden
-#line 12
+#line 11
  testRunner.When("I move cursor to \'mobilePhones&accessories\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 13
+#line 12
  testRunner.And("I click on \'mobilePhones\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 14
+#line 13
  testRunner.Then("I verify that \'MobilePhonesPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -137,14 +134,11 @@ this.ScenarioInitialize(scenarioInfo);
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Navigate to Mobile phone FAIL")]
-        [NUnit.Framework.CategoryAttribute("ignoreScenario")]
         public virtual void NavigateToMobilePhoneFAIL()
         {
-            string[] tagsOfScenario = new string[] {
-                    "ignoreScenario"};
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Mobile phone FAIL", null, new string[] {
-                        "ignoreScenario"});
-#line 17
+            string[] tagsOfScenario = ((string[])(null));
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Navigate to Mobile phone FAIL", null, ((string[])(null)));
+#line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -164,13 +158,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 18
+#line 16
  testRunner.Given("I navigate to page \'https://catalog.onliner.by/\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 19
+#line 17
  testRunner.Then("I verify that \'CatalogPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 20
+#line 18
  testRunner.When("I click on \'electronics\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
                 TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -181,16 +175,16 @@ this.ScenarioInitialize(scenarioInfo);
                             "mobilePhones&accessories_INVALID",
                             "tv&video",
                             "tablets&ebooks"});
-#line 21
+#line 19
  testRunner.Then("I verify that elements are displayed:", ((string)(null)), table8, "Then ");
 #line hidden
-#line 24
+#line 22
  testRunner.When("I move cursor to \'mobilePhones&accessories_INVALID\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 25
+#line 23
  testRunner.And("I click on \'mobilePhones\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 26
+#line 24
  testRunner.Then("I verify that \'MobilePhonesPage\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

@@ -17,8 +17,6 @@ namespace Tests.Steps
             _scenarioContext = scenarioContext ?? throw new ArgumentNullException(nameof(scenarioContext));
 
             var driver = _scenarioContext.Get<IWebDriver>("driver");
-            driver.Manage().Window.Maximize();
-
             _pageActions = new PageActions(driver);
         }
 
@@ -153,6 +151,12 @@ namespace Tests.Steps
         {
             var elementNames = table.Rows[0].Values.ToList();
             _pageActions.VerifyElementsAreSelected(elementNames, false);
+        }
+
+        [Then(@"I verify that '(.*)' elements contain '(.*)'")]
+        public void ThenIVerifyThatElementsContain(string elementName, string text)
+        {
+            _pageActions.VerifyElementsContainsText(elementName, text);
         }
     }
 }
