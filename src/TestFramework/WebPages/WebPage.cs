@@ -48,7 +48,19 @@ namespace TestFramework.WebPages
 
         public IEnumerable<IWebElement> GetWebElements(string elementName)
         {
-            return _webElementFactory.FindWebElements(WebElementsDictionary[elementName]);
+            try
+            {
+                return _webElementFactory.FindWebElements(WebElementsDictionary[elementName]);
+            }
+            catch (NotSupportedException ex)
+            {
+                throw new NotSupportedException($"{ex.Message}. {BuildErrorAdditionalInfo(elementName)}");
+            }
+            catch (InvalidSelectorException ex)
+            {
+                throw new InvalidSelectorException($"{ex.Message}. {BuildErrorAdditionalInfo(elementName)}");
+            }
+            
         }
 
         public SelectElement GetDropDown(string elementName)

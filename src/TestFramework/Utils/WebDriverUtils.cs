@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace TestFramework.Utils
 {
@@ -17,6 +18,11 @@ namespace TestFramework.Utils
         }
 
         public void ExecuteScript(IWebElement element, string script)
+        {
+            ((IJavaScriptExecutor)_driver).ExecuteScript(script, element);
+        }
+
+        public void ExecuteScript(SelectElement element, string script)
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript(script, element);
         }
