@@ -4,7 +4,7 @@ using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using TestFramework.PageActions;
 
-namespace Tests.Steps
+namespace SpecFlowTestApp.Steps
 {
     [Binding]
     public class Steps
@@ -72,7 +72,7 @@ namespace Tests.Steps
         [Then(@"I verify '(.*)' element is not exist")]
         public void ThenIVerifyElementIsNotExist(string elementName)
         {
-            _pageActions.VerifyElementIsExist(elementName, false);
+            _pageActions.VerifyElementIsNotExist(elementName);
         }
 
         [Then(@"I verify that '(.*)' element is displayed")]
@@ -91,14 +91,14 @@ namespace Tests.Steps
         [Then(@"I verify that '(.*)' element is not displayed")]
         public void ThenIVerifyThatElementIsNotDisplayed(string elementName)
         {
-            _pageActions.VerifyElementIsDisplayed(elementName, false);
+            _pageActions.VerifyElementIsNotDisplayed(elementName);
         }
 
         [Then(@"I verify that elements are not displayed:")]
         public void ThenIVerifyThatElementsAreNotDisplayed(Table table)
         {
             var elementNames = table.Rows[0].Values.ToList();
-            _pageActions.VerifyElementsAreDisplayed(elementNames, false);
+            _pageActions.VerifyElementsAreNotDisplayed(elementNames);
         }
 
         [Then(@"I verify that '(.*)' element is enabled")]
@@ -117,14 +117,14 @@ namespace Tests.Steps
         [Then(@"I verify that '(.*)' element is not enabled")]
         public void ThenIVerifyThatElementIsNotEnabled(string elementName)
         {
-            _pageActions.VerifyElementIsEnabled(elementName, false);
+            _pageActions.VerifyElementIsNotEnabled(elementName);
         }
 
         [Then(@"I verify that elements are not enabled:")]
         public void ThenIVerifyThatElementsAreNotEnabled(Table table)
         {
             var elementNames = table.Rows[0].Values.ToList();
-            _pageActions.VerifyElementsAreEnabled(elementNames, false);
+            _pageActions.VerifyElementsAreNotEnabled(elementNames);
         }
 
         [Then(@"I verify that '(.*)' element is selected")]
@@ -143,14 +143,14 @@ namespace Tests.Steps
         [Then(@"I verify that '(.*)' element is not selected")]
         public void ThenIVerifyThatElementIsNotSelected(string elementName)
         {
-            _pageActions.VerifyElementIsSelected(elementName, false);
+            _pageActions.VerifyElementIsNotSelected(elementName);
         }
 
         [Then(@"I verify that elements are not selected:")]
         public void ThenIVerifyThatElementsAreNotSelected(Table table)
         {
             var elementNames = table.Rows[0].Values.ToList();
-            _pageActions.VerifyElementsAreSelected(elementNames, false);
+            _pageActions.VerifyElementsAreNotSelected(elementNames);
         }
 
         [Then(@"I verify that '(.*)' elements contain '(.*)'")]

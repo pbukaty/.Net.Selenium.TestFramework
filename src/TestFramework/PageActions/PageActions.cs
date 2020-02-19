@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using TestFramework.Constants;
@@ -38,8 +40,6 @@ namespace TestFramework.PageActions
 
             foreach (var item in _webPage.WebElementsDictionary.Where(e => e.Value.IsMandatory == true))
             {
-                // var element = _webPage.GetWebElement(item.Key);
-                // element.Should().BeDisplayed(item.Key, BuildErrorAdditionalInfo(item.Key));
                 VerifyElementIsDisplayed(item.Key);
             }
         }
@@ -92,6 +92,8 @@ namespace TestFramework.PageActions
             var dropDown = _webPage.GetDropDown(elementName);
             try
             {
+                _driverUtils.ExecuteScript(dropDown, JavaScript.ScrollIntoElement);
+
                 switch (selectBy)
                 {
                     case "value":
@@ -107,86 +109,118 @@ namespace TestFramework.PageActions
                         throw new NotSupportedException($"'{selectBy}' is not supported selected type");
                 }
             }
-            catch (NoSuchElementException ex)
+            catch (Exception ex)
             {
-                throw new NoSuchElementException($"{ex.Message}. {BuildErrorAdditionalInfo(elementName)}");
+                throw new Exception($"{ex.Message}. {BuildErrorAdditionalInfo(elementName)}");
             }
         }
 
-        public void VerifyElementIsExist(string elementName, bool shouldExist = true)
+        public void VerifyElementIsExist(string elementName)
         {
-            _webPage.GetWebElement(elementName, shouldExist);
+            _webPage.GetWebElement(elementName);
         }
 
-        public void VerifyElementIsDisplayed(string elementName, bool isDisplayed = true)
+        public void VerifyElementIsNotExist(string elementName)
+        {
+            _webPage.GetWebElement(elementName, false);
+        }
+
+        public void VerifyElementIsDisplayed(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-
-            if (isDisplayed)
-            {
-                element.Should().BeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
-            }
-            else
-            {
-                element.Should().NotBeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
-            }
+            element.Should().BeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
-        public void VerifyElementsAreDisplayed(IList<string> elementNames, bool isDisplayed = true)
+        public void VerifyElementIsNotDisplayed(string elementName)
+        {
+            var element = _webPage.GetWebElement(elementName);
+            element.Should().NotBeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
+        }
+
+        public void VerifyElementsAreDisplayed(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
             {
-                VerifyElementIsDisplayed(elementName, isDisplayed);
+                VerifyElementIsDisplayed(elementName);
             }
         }
 
-        public void VerifyElementIsSelected(string elementName, bool isSelected = true)
-        {
-            var element = _webPage.GetWebElement(elementName);
-
-            if (isSelected)
-            {
-                element.Should().BeSelected(elementName, BuildErrorAdditionalInfo(elementName));
-            }
-            else
-            {
-                element.Should().NotBeSelected(elementName, BuildErrorAdditionalInfo(elementName));
-            }
-        }
-
-        public void VerifyElementsAreSelected(IList<string> elementNames, bool isSelected = true)
+        public void VerifyElementsAreNotDisplayed(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
             {
-                VerifyElementIsSelected(elementName, isSelected);
+                VerifyElementIsNotDisplayed(elementName);
             }
         }
 
-        public void VerifyElementIsEnabled(string elementName, bool isEnabled = true)
+        public void VerifyElementIsSelected(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-
-            if (isEnabled)
-            {
-                element.Should().BeEnabled(elementName, BuildErrorAdditionalInfo(elementName));
-            }
-            else
-            {
-                element.Should().NotBeEnabled(elementName, BuildErrorAdditionalInfo(elementName));
-            }
+            element.Should().BeSelected(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
-        public void VerifyElementsAreEnabled(IList<string> elementNames, bool isEnabled = true)
+        public void VerifyElementIsNotSelected(string elementName)
+        {
+            var element = _webPage.GetWebElement(elementName);
+            element.Should().NotBeSelected(elementName, BuildErrorAdditionalInfo(elementName));
+        }
+
+        public void VerifyElementsAreSelected(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
             {
-                VerifyElementIsEnabled(elementName, isEnabled);
+                VerifyElementIsSelected(elementName);
+            }
+        }
+
+        public void VerifyElementsAreNotSelected(IList<string> elementNames)
+        {
+            foreach (var elementName in elementNames)
+            {
+                VerifyElementIsNotSelected(elementName);
+            }
+        }
+
+        public void VerifyElementIsEnabled(string elementName)
+        {
+            var element = _webPage.GetWebElement(elementName);
+            element.Should().BeEnabled(elementName, BuildErrorAdditionalInfo(elementName));
+        }
+
+        public void VerifyElementIsNotEnabled(string elementName)
+        {
+            var element = _webPage.GetWebElement(elementName);
+            element.Should().NotBeEnabled(elementName, BuildErrorAdditionalInfo(elementName));
+        }
+
+        public void VerifyElementsAreEnabled(IList<string> elementNames)
+        {
+            foreach (var elementName in elementNames)
+            {
+                VerifyElementIsEnabled(elementName);
+            }
+        }
+
+        public void VerifyElementsAreNotEnabled(IList<string> elementNames)
+        {
+            foreach (var elementName in elementNames)
+            {
+                VerifyElementIsNotEnabled(elementName);
             }
         }
 
         public void VerifyElementsContainsText(string elementName, string text)
         {
-            var elements = _webPage.GetWebElement(elementName);
+            //TODO: should be replaced by waiting
+            Thread.Sleep(5000);
+            var elements = _webPage.GetWebElements(elementName);
+
+            var strs = new List<string>();
+            foreach (var element in elements)
+            {
+                strs.Add(element.Text);
+            }
+            File.WriteAllLines($"{AppDomain.CurrentDomain.BaseDirectory}log.txt", strs);
         }
 
         private void ElementClick(IWebElement element, string elementName)
@@ -195,7 +229,7 @@ namespace TestFramework.PageActions
             {
                 element.Click();
             }
-            catch (ElementClickInterceptedException ex)
+            catch (ElementNotInteractableException ex)
             {
                 try
                 {
