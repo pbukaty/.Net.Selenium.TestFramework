@@ -17,6 +17,11 @@ namespace TestFramework.Utils
             screenshot.SaveAsFile($"{reportPath}\\{screenshotName}.png");
         }
 
+        public byte[] TakeScreenshot()
+        {
+            return ((ITakesScreenshot) _driver).GetScreenshot().AsByteArray;
+        }
+
         public void ExecuteScript(IWebElement element, string script)
         {
             ((IJavaScriptExecutor)_driver).ExecuteScript(script, element);

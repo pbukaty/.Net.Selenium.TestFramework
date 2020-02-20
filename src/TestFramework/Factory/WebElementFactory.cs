@@ -8,6 +8,7 @@ namespace TestFramework.Factory
     public class WebElementFactory
     {
         private readonly IWebDriver _driver;
+
         public WebElementFactory(IWebDriver driver)
         {
             _driver = driver;
