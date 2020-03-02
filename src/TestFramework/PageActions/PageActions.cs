@@ -74,11 +74,10 @@ namespace TestFramework.PageActions
         public void SetElementSelectedState(string elementName, bool state)
         {
             var element = _webPage.GetWebElement(elementName);
-            var b = element.Selected;
-            // if (element.Selected != state)
-            // {
-            //     ElementClick(element, elementName);
-            // }
+            if (element.Selected != state)
+            {
+                ElementClick(element, elementName);
+            }
         }
 
         [AllureStep("Type text '&text&' into element '&elementName&'")]
@@ -151,7 +150,7 @@ namespace TestFramework.PageActions
             element.Should().NotBeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
-        [AllureStep("Verify elements '&elementNames&' are displayed")]//TODO: need to verify
+        [AllureStep("Verify elements are displayed")]
         public void VerifyElementsAreDisplayed(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -160,7 +159,7 @@ namespace TestFramework.PageActions
             }
         }
 
-        [AllureStep("Verify elements '&elementNames&' are not displayed")]//TODO: need to verify
+        [AllureStep("Verify elements are not displayed")]
         public void VerifyElementsAreNotDisplayed(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -183,7 +182,7 @@ namespace TestFramework.PageActions
             element.Should().NotBeSelected(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
-        [AllureStep("Verify elements '&elementNames&' are selected")]
+        [AllureStep("Verify elements are selected")]
         public void VerifyElementsAreSelected(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -215,7 +214,7 @@ namespace TestFramework.PageActions
             element.Should().NotBeEnabled(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
-        [AllureStep("Verify elements '&elementNames&' are enabled")]
+        [AllureStep("Verify elements are enabled")]
         public void VerifyElementsAreEnabled(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -224,7 +223,7 @@ namespace TestFramework.PageActions
             }
         }
 
-        [AllureStep("Verify elements '&elementNames&' are not enabled")]
+        [AllureStep("Verify elements are not enabled")]
         public void VerifyElementsAreNotEnabled(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)

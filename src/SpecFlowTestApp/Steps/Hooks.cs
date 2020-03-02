@@ -1,82 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AventStack.ExtentReports;
-using AventStack.ExtentReports.Gherkin.Model;
-using AventStack.ExtentReports.MarkupUtils;
-using AventStack.ExtentReports.Reporter;
+using System.IO;
+using Allure.Commons;
+using Allure.NUnit.Attributes;
+using BoDi;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using TechTalk.SpecFlow;
 using TestFramework.Factory;
 using TestFramework.Utils;
-using Reports = AventStack.ExtentReports.ExtentReports;
 
-namespace Tests.Steps
+namespace SpecFlowTestApp.Steps
 {
     [Binding]
     public class Hooks
     {
         private readonly ScenarioContext _scenarioContext;
+        private readonly IObjectContainer _objectContainer;
+
         private IWebDriver _driver;
         private WebDriverUtils _driverUtils;
-        private DateTime _startStepTime;
 
-        [ThreadStatic]
-        private static ExtentTest _feature;
-        [ThreadStatic]
-        private static ExtentTest _scenario;
-        [ThreadStatic]
-        private static ExtentTest _step;
-        private static Reports _extent;
-        private static string _reportPath;
         private static string _driverName;
 
-        public Hooks(ScenarioContext scenarioContext)
+        private static string AllureConfigDir = $"{AppDomain.CurrentDomain.BaseDirectory}";
+
+        public Hooks(IObjectContainer objectContainer, ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext ?? throw new ArgumentNullException(nameof(scenarioContext));
+            _objectContainer = objectContainer;
+        }
+
+        [OneTimeSetUp]
+        public void SetupForAllure()
+        {
+            Environment.CurrentDirectory = Path.GetDirectoryName(GetType().Assembly.Location);
         }
 
         [BeforeTestRun]
         public static void BeforeTestRun()
         {
             _driverName = Environment.GetEnvironmentVariable("driver");
-            var reportName = $"Report_{_driverName}_{DateTime.Now:dd-MM-yyyy_HHmmss}";
-
-            _reportPath = $"{AppDomain.CurrentDomain.BaseDirectory}TestResults\\{reportName}\\";
-
-            var htmlReporter = new ExtentHtmlReporter(_reportPath);
-            htmlReporter.Config.Theme = AventStack.ExtentReports.Reporter.Configuration.Theme.Standard;
-
-            _extent = new Reports();
-            _extent.AttachReporter(htmlReporter);
+            AllureLifecycle.Instance.CleanupResultDirectory();
         }
 
-        [BeforeFeature]
-        public static void BeforeFeature(FeatureContext featureContext)
-        {
-            _feature = _extent.CreateTest<Feature>(featureContext.FeatureInfo.Title);
-            if (featureContext.FeatureInfo.Tags.Contains("ignoreFeature"))
-            {
-                _feature.Model.Status = Status.Skip;
-                Assert.Ignore("Ignore feature");
-            }
-        }
+        // [BeforeFeature]
+        // public static void BeforeFeature(FeatureContext featureContext)
+        // {
+        // }
 
+        // [AllureStep]
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext scenarioContext)
         {
             //TODO: need for debug
             _driverName = "chrome";
             //=====================
-            var scenarioTitle = scenarioContext.ScenarioInfo.Title;
-            _scenario = _feature.CreateNode<Scenario>(scenarioTitle);
-
-            if (scenarioContext.ScenarioInfo.Tags.Contains("ignoreScenario"))
-            {
-                _scenario.Model.Status = Status.Skip;
-                Assert.Ignore("Ignore scenario");
-            }
 
             try
             {
@@ -84,162 +62,33 @@ namespace Tests.Steps
             }
             catch (ArgumentNullException ex)
             {
-                _scenario.CreateNode<Scenario>(scenarioTitle).Fail(ex.Message);
                 Assert.Fail(ex.Message);
             }
             catch (NotSupportedException ex)
             {
-                _scenario.CreateNode<Scenario>(scenarioTitle).Fail(ex.Message);
                 Assert.Fail(ex.Message);
             }
             catch (DriverServiceNotFoundException ex)
             {
-                _scenario.CreateNode<Scenario>(scenarioTitle).Fail(ex.Message);
                 Assert.Fail(ex.Message);
             }
 
             _scenarioContext.Set(_driver, "driver");
             _driverUtils = new WebDriverUtils(_driver);
-        }
 
-        [BeforeStep]
-        public void BeforeStep(ScenarioContext scenarioContext)
-        {
-            _startStepTime = DateTime.Now;
-        }
-
-        [AfterStep]
-        public void InsertReportingSteps(ScenarioContext scenarioContext)
-        {
-            if (scenarioContext.TestError == null)
+            AllureLifecycle.Instance.SetCurrentTestActionInException(() =>
             {
-                CreatePassNode(scenarioContext);
-            }
-            else
-            {
-                CreateFailNode(scenarioContext);
-            }
-
-            SetStepInfo(scenarioContext);
+                AllureLifecycle.Instance.AddAttachment("Step screenshot", AllureLifecycle.AttachFormat.ImagePng,
+                    _driverUtils.TakeScreenshot());
+            });
         }
 
         [AfterScenario]
+        [TearDown]
+        [AllureStep("Close all WebDriver instances")]
         public void AfterScenario(ScenarioContext scenarioContext)
         {
-            _driver?.Quit();
-
-            //TODO: doesn't work
-            _scenario.Info($"Duration: {_scenario.Model.RunDuration}");
-        }
-
-        [AfterFeature]
-        public static void AfterFeature()
-        {
-            //TODO: doesn't work
-            _feature.Info($"Duration: {_feature.Model.RunDuration}");
-        }
-
-        [AfterTestRun]
-        public static void AfterTestRun()
-        {
-            //Flush report once test completes
-            _extent.Flush();
-        }
-
-        private void CreatePassNode(ScenarioContext scenarioContext)
-        {
-            var stepInfo = scenarioContext.StepContext.StepInfo;
-            var stepType = stepInfo.StepInstance.Keyword;
-            var stepDescription = $"{stepType}{stepInfo.Text}";
-
-            switch (stepType.Trim())
-            {
-                case "Given":
-                    _step = _scenario.CreateNode<Given>(stepDescription);
-                    break;
-                case "When":
-                    _step = _scenario.CreateNode<When>(stepDescription);
-                    break;
-                case "Then":
-                    _step = _scenario.CreateNode<Then>(stepDescription);
-                    break;
-                case "And":
-                    _step = _scenario.CreateNode<And>(stepDescription);
-                    break;
-            }
-        }
-
-        private void CreateFailNode(ScenarioContext scenarioContext)
-        {
-            var stepInfo = scenarioContext.StepContext.StepInfo;
-            var stepType = stepInfo.StepInstance.Keyword;
-            var stepDescription = $"{stepType}{stepInfo.Text}";
-            var errorType = scenarioContext.TestError.GetType().ToString();
-            var errorMessage = scenarioContext.TestError.Message
-                .Replace("<", "[")
-                .Replace(">", "]");
-
-            switch (stepType.Trim())
-            {
-                case "Given":
-                    _step = _scenario.CreateNode<Given>(stepDescription).Fail($"{errorType}: {errorMessage}");
-                    break;
-                case "When":
-                    _step = _scenario.CreateNode<When>(stepDescription).Fail($"{errorType}: {errorMessage}");
-                    break;
-                case "Then":
-                    _step = _scenario.CreateNode<Then>(stepDescription).Fail($"{errorType}: {errorMessage}");
-                    break;
-                case "And":
-                    _step = _scenario.CreateNode<And>(stepDescription).Fail($"{errorType}: {errorMessage}");
-                    break;
-            }
-
-            AddScreenshot();
-        }
-
-        private void SetStepInfo(ScenarioContext scenarioContext)
-        {
-            var stepInfo = scenarioContext.StepContext.StepInfo;
-            _step.Info($"Duration: {DateTime.Now - _startStepTime}.");
-
-            if (stepInfo.Table != null)
-            {
-                _step.Info("Parameters:");
-                _step.Info(MarkupHelper.CreateTable(ConvertTableToArray(stepInfo.Table)));
-            }
-        }
-
-        private void AddScreenshot()
-        {
-            var screenshotName = $"{_scenario.Model.Name}_{DateTime.Now:dd-MM-yyyy_HHmmss}";
-            _driverUtils.TakeScreenshot(_reportPath, screenshotName);
-
-            var mediaModel =
-                MediaEntityBuilder.CreateScreenCaptureFromPath($"{_reportPath}\\{screenshotName}.png").Build();
-            _step.Fail("Details: ", mediaModel);
-        }
-
-        private string[,] ConvertTableToArray(Table table)
-        {
-            var data = new List<string[]>();
-
-            foreach (var row in table.Rows)
-            {
-                data.Add(row.Keys as string[]);
-                data.Add(row.Values as string[]);
-            }
-
-            var array = new string [data.Count, data[0].Length];
-            for (var i = 0; i < data.Count; i++)
-            {
-                for (var j = 0; j < data[0].Length; j++)
-                {
-                    array[i, j] = data[i][j];
-                }
-            }
-
-            return array;
+            _driver.Quit();
         }
     }
 }

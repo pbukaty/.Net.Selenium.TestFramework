@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestFramework", "TestFramew
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecFlowTestApp", "SpecFlowTestApp\SpecFlowTestApp.csproj", "{7A482ACF-D069-4EDA-9C79-29099F2CFB03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTestApp", "NUnitTestApp\NUnitTestApp.csproj", "{ACD97F70-FCBA-4D20-AA0A-C74C09BD9C36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnitTestApp", "NUnitTestApp\NUnitTestApp.csproj", "{ACD97F70-FCBA-4D20-AA0A-C74C09BD9C36}"
 	ProjectSection(ProjectDependencies) = postProject
 		{921E3928-4521-42AE-ACEF-B9BE46AE4630} = {921E3928-4521-42AE-ACEF-B9BE46AE4630}
 	EndProjectSection
