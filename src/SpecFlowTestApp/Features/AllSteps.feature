@@ -2,8 +2,7 @@
 Feature: AllSteps
 	The scenario contains the list of all implemented steps
 
-#@ignoreScenario
-@ignore
+@ignoreScenario
 Scenario: All step types example
 #======== Actions ==============
 	Given I navigate to page 'Url'

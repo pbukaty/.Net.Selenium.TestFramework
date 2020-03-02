@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Allure.Commons;
-using Allure.NUnit.Attributes;
 using BoDi;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -12,10 +12,10 @@ using TestFramework.Utils;
 namespace SpecFlowTestApp.Steps
 {
     [Binding]
+    [TestFixture]
     public class Hooks
     {
         private readonly ScenarioContext _scenarioContext;
-        private readonly IObjectContainer _objectContainer;
 
         private IWebDriver _driver;
         private WebDriverUtils _driverUtils;
@@ -27,7 +27,6 @@ namespace SpecFlowTestApp.Steps
         public Hooks(IObjectContainer objectContainer, ScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext ?? throw new ArgumentNullException(nameof(scenarioContext));
-            _objectContainer = objectContainer;
         }
 
         [OneTimeSetUp]
@@ -43,15 +42,23 @@ namespace SpecFlowTestApp.Steps
             AllureLifecycle.Instance.CleanupResultDirectory();
         }
 
-        // [BeforeFeature]
-        // public static void BeforeFeature(FeatureContext featureContext)
-        // {
-        // }
+        [BeforeFeature]
+        public static void BeforeFeature(FeatureContext featureContext)
+        {
+            if (featureContext.FeatureInfo.Tags.Contains("ignoreFeature"))
+            {
+                Assert.Ignore($"Ignore feature '{featureContext.FeatureInfo.Title}'");
+            }
+        }
 
-        // [AllureStep]
         [BeforeScenario]
         public void BeforeScenario(ScenarioContext scenarioContext)
         {
+            if (scenarioContext.ScenarioInfo.Tags.Contains("ignoreScenario"))
+            {
+                Assert.Ignore("Ignore scenario");
+            }
+
             //TODO: need for debug
             _driverName = "chrome";
             //=====================
@@ -84,11 +91,9 @@ namespace SpecFlowTestApp.Steps
         }
 
         [AfterScenario]
-        [TearDown]
-        [AllureStep("Close all WebDriver instances")]
         public void AfterScenario(ScenarioContext scenarioContext)
         {
-            _driver.Quit();
+            _driver?.Quit();
         }
     }
 }

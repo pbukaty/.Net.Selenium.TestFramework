@@ -21,14 +21,12 @@ namespace SpecFlowTestApp.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("AllSteps")]
-    [NUnit.Framework.CategoryAttribute("ignoreFeature")]
     public partial class AllStepsFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = new string[] {
-                "ignoreFeature"};
+        private string[] _featureTags = ((string[])(null));
         
 #line 1 "AllSteps.feature"
 #line hidden
@@ -37,8 +35,7 @@ namespace SpecFlowTestApp.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "AllSteps", "\tThe scenario contains the list of all implemented steps", ProgrammingLanguage.CSharp, new string[] {
-                        "ignoreFeature"});
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "AllSteps", "\tThe scenario contains the list of all implemented steps", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -78,14 +75,14 @@ namespace SpecFlowTestApp.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("All step types example")]
-        [NUnit.Framework.CategoryAttribute("ignore")]
+        [NUnit.Framework.CategoryAttribute("ignoreScenario")]
         public virtual void AllStepTypesExample()
         {
             string[] tagsOfScenario = new string[] {
-                    "ignore"};
+                    "ignoreScenario"};
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("All step types example", null, new string[] {
-                        "ignore"});
-#line 7
+                        "ignoreScenario"});
+#line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -105,40 +102,40 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 9
+#line 8
  testRunner.Given("I navigate to page \'Url\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 10
+#line 9
  testRunner.When("I click on \'WebElement\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 11
+#line 10
  testRunner.When("I move cursor to \'WebElement\' element", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 12
+#line 11
  testRunner.When("I set \'WebElement\' element selected state to \'true OR false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 13
+#line 12
  testRunner.When("I type \'text\' into element \'WebElement\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 14
+#line 13
  testRunner.When("I select \'text\' item from \'DropDown\' dropdown by \'text\' selection type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 15
+#line 14
  testRunner.When("I select \'value\' item from \'DropDown\' dropdown by \'value\' selection type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 16
+#line 15
  testRunner.When("I select \'index\' item from \'DropDown\' dropdown by \'index\' selection type", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 18
+#line 17
  testRunner.Then("I verify that \'PageName\' page is loaded", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 19
+#line 18
  testRunner.Then("I verify \'WebElement\' element is exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 20
+#line 19
  testRunner.Then("I verify \'WebElement\' element is not exist", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 21
+#line 20
  testRunner.Then("I verify that \'WebElement\' element is displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
@@ -147,10 +144,10 @@ this.ScenarioInitialize(scenarioInfo);
                 table1.AddRow(new string[] {
                             "WebElement1",
                             "WebElement2"});
-#line 22
+#line 21
  testRunner.Then("I verify that elements are displayed:", ((string)(null)), table1, "Then ");
 #line hidden
-#line 25
+#line 24
  testRunner.Then("I verify that \'WebElement\' element is not displayed", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
@@ -159,10 +156,10 @@ this.ScenarioInitialize(scenarioInfo);
                 table2.AddRow(new string[] {
                             "WebElement1",
                             "WebElement2"});
-#line 26
+#line 25
  testRunner.Then("I verify that elements are not displayed:", ((string)(null)), table2, "Then ");
 #line hidden
-#line 29
+#line 28
  testRunner.Then("I verify that \'WebElement\' element is enabled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -171,10 +168,10 @@ this.ScenarioInitialize(scenarioInfo);
                 table3.AddRow(new string[] {
                             "WebElement1",
                             "WebElement2"});
-#line 30
+#line 29
  testRunner.Then("I verify that elements are enabled:", ((string)(null)), table3, "Then ");
 #line hidden
-#line 33
+#line 32
  testRunner.Then("I verify that \'WebElement\' element is not enabled", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
                 TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -183,10 +180,10 @@ this.ScenarioInitialize(scenarioInfo);
                 table4.AddRow(new string[] {
                             "WebElement1",
                             "WebElement2"});
-#line 34
+#line 33
  testRunner.Then("I verify that elements are not enabled:", ((string)(null)), table4, "Then ");
 #line hidden
-#line 37
+#line 36
  testRunner.Then("I verify that \'WebElement\' element is selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
                 TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -195,10 +192,10 @@ this.ScenarioInitialize(scenarioInfo);
                 table5.AddRow(new string[] {
                             "WebElement1",
                             "WebElement2"});
-#line 38
+#line 37
  testRunner.Then("I verify that elements are selected:", ((string)(null)), table5, "Then ");
 #line hidden
-#line 41
+#line 40
  testRunner.Then("I verify that \'WebElement\' element is not selected", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
                 TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -207,7 +204,7 @@ this.ScenarioInitialize(scenarioInfo);
                 table6.AddRow(new string[] {
                             "WebElement1",
                             "WebElement2"});
-#line 42
+#line 41
  testRunner.Then("I verify that elements are not selected:", ((string)(null)), table6, "Then ");
 #line hidden
             }
