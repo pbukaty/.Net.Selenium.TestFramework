@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Allure.NUnit.Attributes;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using TestFramework.Constants;
@@ -24,16 +25,19 @@ namespace TestFramework.PageActions
             _driverUtils = new WebDriverUtils(_driver);
         }
 
+        [AllureStep("Navigate to page '&url&'")]
         public void NavigateToPage(string url)
         {
             _driver.Navigate().GoToUrl(url);
         }
 
+        [AllureStep("Refresh page")]
         public void RefreshPage()
         {
             _driver.Navigate().Refresh();
         }
 
+        [AllureStep("Verify page '&pageName&' is loaded")]
         public void VerifyPageIsLoaded(string pageName)
         {
             _webPage = new WebPage(_driver, pageName);
@@ -44,12 +48,14 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Click on element '&elementName&'")]
         public void ElementClick(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
             ElementClick(element, elementName);
         }
 
+        [AllureStep("Move cursor on element '&elementName&'")]
         public void MoveCursorToElement(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
@@ -64,15 +70,18 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Set element '&elementName&' selected state into ")]
         public void SetElementSelectedState(string elementName, bool state)
         {
             var element = _webPage.GetWebElement(elementName);
-            if (element.Selected != state)
-            {
-                ElementClick(element, elementName);
-            }
+            var b = element.Selected;
+            // if (element.Selected != state)
+            // {
+            //     ElementClick(element, elementName);
+            // }
         }
 
+        [AllureStep("Type text '&text&' into element '&elementName&'")]
         public void ElementSendKeys(string elementName, string text)
         {
             var element = _webPage.GetWebElement(elementName);
@@ -87,6 +96,7 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Select value '&value&' from dropdown '&elementName&' by '&selectBy&'")]
         public void SelectItemFromDropdown(string elementName, string value, string selectBy)
         {
             var dropDown = _webPage.GetDropDown(elementName);
@@ -115,28 +125,33 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Verify element '&elementName&' is exist")]
         public void VerifyElementIsExist(string elementName)
         {
             _webPage.GetWebElement(elementName);
         }
 
+        [AllureStep("Verify element '&elementName&' is not exist")]
         public void VerifyElementIsNotExist(string elementName)
         {
             _webPage.GetWebElement(elementName, false);
         }
 
+        [AllureStep("Verify element '&elementName&' is displayed")]
         public void VerifyElementIsDisplayed(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
             element.Should().BeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
+        [AllureStep("Verify element '&elementName&' is not displayed")]
         public void VerifyElementIsNotDisplayed(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
             element.Should().NotBeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
+        [AllureStep("Verify elements '&elementNames&' are displayed")]//TODO: need to verify
         public void VerifyElementsAreDisplayed(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -145,6 +160,7 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Verify elements '&elementNames&' are not displayed")]//TODO: need to verify
         public void VerifyElementsAreNotDisplayed(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -153,18 +169,21 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Verify element '&elementName&' is selected")]
         public void VerifyElementIsSelected(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
             element.Should().BeSelected(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
+        [AllureStep("Verify element '&elementName&' is not selected")]
         public void VerifyElementIsNotSelected(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
             element.Should().NotBeSelected(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
+        [AllureStep("Verify elements '&elementNames&' are selected")]
         public void VerifyElementsAreSelected(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -173,6 +192,7 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Verify elements '&elementNames&' are not selected")]
         public void VerifyElementsAreNotSelected(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -181,18 +201,21 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Verify element '&elementName&' is enabled")]
         public void VerifyElementIsEnabled(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
             element.Should().BeEnabled(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
+        [AllureStep("Verify element '&elementName&' is not enabled")]
         public void VerifyElementIsNotEnabled(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
             element.Should().NotBeEnabled(elementName, BuildErrorAdditionalInfo(elementName));
         }
 
+        [AllureStep("Verify elements '&elementNames&' are enabled")]
         public void VerifyElementsAreEnabled(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -201,6 +224,7 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Verify elements '&elementNames&' are not enabled")]
         public void VerifyElementsAreNotEnabled(IList<string> elementNames)
         {
             foreach (var elementName in elementNames)
@@ -209,6 +233,7 @@ namespace TestFramework.PageActions
             }
         }
 
+        [AllureStep("Verify elements '&elementName&' contains text '&text&'")]
         public void VerifyElementsContainsText(string elementName, string text)
         {
             //TODO: should be replaced by waiting

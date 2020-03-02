@@ -5,19 +5,19 @@ namespace NUnitTestApp.Features
 {
     [AllureSuite("Mobile phone filters tests")]
     [Parallelizable]
-    public class MobilePhoneFiltersTests : Hooks
+    public class MobilePhoneFiltersTests : BaseTest
     {
         [TestCase(TestName = "Verify Mobile Page Filters")]
         public void VerifyMobilePageFilters()
         {
-            Perform("NavigateToPage", "https://catalog.onliner.by/mobile");
-            Perform("VerifyPageIsLoaded", "MobilePhonesPage");
-            Perform("SetElementSelectedState", "xiaomiCheckBox", true);
-            Perform("VerifyElementIsSelected", "xiaomiCheckBox");
-            Perform("ElementSendKeys", "maxAmountTextBox", "300");
-            Perform("SelectItemFromDropdown", "screenSizeMaxDropDown", "5.8\"", "text");
-            Perform("SelectItemFromDropdown", "ramMinDropDown", "2gb", "value");
-            Perform("SelectItemFromDropdown", "screenResolutionMinDropDown", "18", "index");
+            PageActions.NavigateToPage("https://catalog.onliner.by/mobile");
+            PageActions.VerifyPageIsLoaded("MobilePhonesPage");
+            PageActions.SetElementSelectedState("xiaomiCheckBox", true);
+            PageActions.VerifyElementIsSelected("xiaomiCheckBox");
+            PageActions.ElementSendKeys("maxAmountTextBox", "300");
+            PageActions.SelectItemFromDropdown("screenSizeMaxDropDown", "5.8\"", "text");
+            PageActions.SelectItemFromDropdown("ramMinDropDown", "2gb", "value");
+            PageActions.SelectItemFromDropdown("screenResolutionMinDropDown", "18", "index");
         }
     }
 }

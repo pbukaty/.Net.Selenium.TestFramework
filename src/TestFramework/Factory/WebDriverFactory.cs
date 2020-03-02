@@ -32,6 +32,7 @@ namespace TestFramework.Factory
                     //TODO: read options
                     var chromeOptions = new ChromeOptions();
                     // chromeOptions.AddArguments("headless");
+                    //TODO: add\remove mobile phone view option
                     _driver = new ChromeDriver(driverPath, chromeOptions);
                     break;
                 case "firefox":

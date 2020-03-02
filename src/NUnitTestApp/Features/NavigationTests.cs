@@ -6,33 +6,31 @@ namespace NUnitTestApp.Features
 {
     [AllureSuite("Navigation tests")]
     [Parallelizable]
-    public class NavigationTests : Hooks
+    public class NavigationTests : BaseTest
     {
         [TestCase(TestName = "Navigate to Mobile page")]
         public void NavigateToMobilePage()
         {
-            Perform("NavigateToPage", "https://catalog.onliner.by/");
-            Perform("RefreshPage");
-            Perform("VerifyPageIsLoaded", "catalogPage");
-            Perform("ElementClick", "electronics");
-            Perform("VerifyElementsAreDisplayed",
-                "mobilePhones&accessories/tv&video/tablets&ebooks".Split('/').ToList());
-            Perform("MoveCursorToElement", "mobilePhones&accessories");
-            Perform("ElementClick", "mobilePhones");
-            Perform("VerifyPageIsLoaded", "MobilePhonesPage");
+            PageActions.NavigateToPage("https://catalog.onliner.by/");
+            PageActions.RefreshPage();
+            PageActions.VerifyPageIsLoaded("catalogPage");
+            PageActions.ElementClick("electronics");
+            PageActions.VerifyElementsAreDisplayed("mobilePhones&accessories/tv&video/tablets&ebooks".Split('/').ToList());
+            PageActions.MoveCursorToElement("mobilePhones&accessories");
+            PageActions.ElementClick("mobilePhones");
+            PageActions.VerifyPageIsLoaded("MobilePhonesPage");
         }
 
         [TestCase(TestName = "Navigate to Mobile page FAIL")]
         public void NavigateToMobilePage_FAIL()
         {
-            Perform("NavigateToPage", "https://catalog.onliner.by/");
-            Perform("VerifyPageIsLoaded", "catalogPage");
-            Perform("ElementClick", "electronics");
-            Perform("VerifyElementsAreDisplayed",
-                "mobilePhones&accessories_INVALID/tv&video/tablets&ebooks".Split('/').ToList());
-            Perform("MoveCursorToElement", "mobilePhones&accessories");
-            Perform("ElementClick", "mobilePhones");
-            Perform("VerifyPageIsLoaded", "MobilePhonesPage");
+            PageActions.NavigateToPage("https://catalog.onliner.by/");
+            PageActions.VerifyPageIsLoaded("catalogPage");
+            PageActions.ElementClick("electronics");
+            PageActions.VerifyElementsAreDisplayed("mobilePhones&accessories_INVALID/tv&video/tablets&ebooks".Split('/').ToList());
+            PageActions.MoveCursorToElement("mobilePhones&accessories");
+            PageActions.ElementClick("mobilePhones");
+            PageActions.VerifyPageIsLoaded("MobilePhonesPage");
         }
     }
 }
