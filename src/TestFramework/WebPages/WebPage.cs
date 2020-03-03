@@ -12,7 +12,7 @@ namespace TestFramework.WebPages
     public class WebPage: BasePage
     {
         public Dictionary<string, Properties> WebElementsDictionary { get; private set; }
-        public string PageName { get; }
+        private string PageName { get; }
 
         private readonly WebElementFactory _webElementFactory;
 
@@ -76,6 +76,7 @@ namespace TestFramework.WebPages
             }
         }
 
+        //TODO: may be move in separate class
         public string BuildErrorAdditionalInfo(string elementName)
         {
             return
