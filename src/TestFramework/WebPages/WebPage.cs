@@ -31,11 +31,11 @@ namespace TestFramework.WebPages
                 var element = _webElementFactory.FindWebElement(WebElementsDictionary[elementName]);
                 if (shouldExist)
                 {
-                    element.Should().BeFound(elementName, BuildErrorAdditionalInfo(elementName));
+                    element.Should().BeFound(BuildErrorAdditionalInfo(elementName));
                 }
                 else
                 {
-                    element.Should().NotBeFound(elementName, BuildErrorAdditionalInfo(elementName));
+                    element.Should().NotBeFound(BuildErrorAdditionalInfo(elementName));
                 }
 
                 return element;
@@ -76,6 +76,12 @@ namespace TestFramework.WebPages
             }
         }
 
+        public string BuildErrorAdditionalInfo(string elementName)
+        {
+            return
+                $"Element info: Page is '{PageName}'; element name: '{elementName}'; element locator: '{WebElementsDictionary[elementName].Locator}'";
+        }
+
         private void InitWebElementsDictionary(IEnumerable<Element> elements)
         {
             WebElementsDictionary = new Dictionary<string, Properties>();
@@ -83,12 +89,6 @@ namespace TestFramework.WebPages
             {
                 WebElementsDictionary.Add(element.Name, element.Properties);
             }
-        }
-
-        private string BuildErrorAdditionalInfo(string elementName)
-        {
-            return
-                $"Element info: Page is '{PageName}'; element name: '{elementName}'; element locator: '{WebElementsDictionary[elementName].Locator}'";
         }
     }
 }

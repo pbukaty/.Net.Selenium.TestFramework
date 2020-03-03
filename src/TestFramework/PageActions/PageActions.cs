@@ -66,7 +66,7 @@ namespace TestFramework.PageActions
             }
             catch (ElementClickInterceptedException ex)
             {
-                throw new ElementClickInterceptedException($"{ex.Message}. {BuildErrorAdditionalInfo(elementName)}");
+                throw new ElementClickInterceptedException($"{ex.Message}. {_webPage.BuildErrorAdditionalInfo(elementName)}");
             }
         }
 
@@ -74,10 +74,25 @@ namespace TestFramework.PageActions
         public void SetElementSelectedState(string elementName, bool state)
         {
             var element = _webPage.GetWebElement(elementName);
+
             if (element.Selected != state)
             {
                 ElementClick(element, elementName);
             }
+        }
+
+        [AllureStep("Set element '&elementName&' selected state into '&state&'")]
+        public void SetElementSelectedState_TEMP(string elementName, bool state)
+        {
+            var element = _webPage.GetWebElement(elementName);
+            var status = element.Enabled;
+            ElementClick(element, elementName);
+            // var st = bool.Parse(state);
+
+            // if (element.Selected != st)
+            // {
+            //     ElementClick(element, elementName);
+            // }
         }
 
         [AllureStep("Type text '&text&' into element '&elementName&'")]
@@ -91,7 +106,7 @@ namespace TestFramework.PageActions
             }
             catch (WebDriverException ex)
             {
-                throw new WebDriverException($"{ex.Message}. {BuildErrorAdditionalInfo(elementName)}");
+                throw new WebDriverException($"{ex.Message}. {_webPage.BuildErrorAdditionalInfo(elementName)}");
             }
         }
 
@@ -120,7 +135,7 @@ namespace TestFramework.PageActions
             }
             catch (Exception ex)
             {
-                throw new Exception($"{ex.Message}. {BuildErrorAdditionalInfo(elementName)}");
+                throw new Exception($"{ex.Message}. {_webPage.BuildErrorAdditionalInfo(elementName)}");
             }
         }
 
@@ -140,14 +155,14 @@ namespace TestFramework.PageActions
         public void VerifyElementIsDisplayed(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-            element.Should().BeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
+            element.Should().BeDisplayed(_webPage.BuildErrorAdditionalInfo(elementName));
         }
 
         [AllureStep("Verify element '&elementName&' is not displayed")]
         public void VerifyElementIsNotDisplayed(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-            element.Should().NotBeDisplayed(elementName, BuildErrorAdditionalInfo(elementName));
+            element.Should().NotBeDisplayed(_webPage.BuildErrorAdditionalInfo(elementName));
         }
 
         [AllureStep("Verify elements are displayed")]
@@ -172,14 +187,14 @@ namespace TestFramework.PageActions
         public void VerifyElementIsSelected(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-            element.Should().BeSelected(elementName, BuildErrorAdditionalInfo(elementName));
+            element.Should().BeSelected(_webPage.BuildErrorAdditionalInfo(elementName));
         }
 
         [AllureStep("Verify element '&elementName&' is not selected")]
         public void VerifyElementIsNotSelected(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-            element.Should().NotBeSelected(elementName, BuildErrorAdditionalInfo(elementName));
+            element.Should().NotBeSelected(_webPage.BuildErrorAdditionalInfo(elementName));
         }
 
         [AllureStep("Verify elements are selected")]
@@ -204,14 +219,14 @@ namespace TestFramework.PageActions
         public void VerifyElementIsEnabled(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-            element.Should().BeEnabled(elementName, BuildErrorAdditionalInfo(elementName));
+            element.Should().BeEnabled(_webPage.BuildErrorAdditionalInfo(elementName));
         }
 
         [AllureStep("Verify element '&elementName&' is not enabled")]
         public void VerifyElementIsNotEnabled(string elementName)
         {
             var element = _webPage.GetWebElement(elementName);
-            element.Should().NotBeEnabled(elementName, BuildErrorAdditionalInfo(elementName));
+            element.Should().NotBeEnabled(_webPage.BuildErrorAdditionalInfo(elementName));
         }
 
         [AllureStep("Verify elements are enabled")]
@@ -238,6 +253,7 @@ namespace TestFramework.PageActions
             //TODO: should be replaced by waiting
             Thread.Sleep(5000);
             var elements = _webPage.GetWebElements(elementName);
+            //TODO: need to verify that elements count > 0
 
             var strs = new List<string>();
             foreach (var element in elements)
@@ -261,15 +277,9 @@ namespace TestFramework.PageActions
                 }
                 catch (WebDriverException ex2)
                 {
-                    throw new Exception($"{ex.Message} & {ex2.Message} {BuildErrorAdditionalInfo(elementName)}");
+                    throw new Exception($"{ex.Message} & {ex2.Message} {_webPage.BuildErrorAdditionalInfo(elementName)}");
                 }
             }
-        }
-
-        private string BuildErrorAdditionalInfo(string elementName)
-        {
-            return
-                $"Element info: Page is '{_webPage.PageName}'; element name: '{elementName}'; element locator: '{_webPage.WebElementsDictionary[elementName].Locator}'";
         }
     }
 }
