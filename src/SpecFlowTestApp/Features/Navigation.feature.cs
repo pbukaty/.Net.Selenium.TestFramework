@@ -172,8 +172,8 @@ this.ScenarioInitialize(scenarioInfo);
                             "element2",
                             "element3"});
                 table8.AddRow(new string[] {
-                            "mobilePhones&accessories_INVALID",
                             "tv&video",
+                            "mobilePhones&accessories_INVALID",
                             "tablets&ebooks"});
 #line 19
  testRunner.Then("I verify that elements are displayed:", ((string)(null)), table8, "Then ");

@@ -17,8 +17,8 @@ Scenario: Navigate to Mobile phone FAIL
 	Then I verify that 'CatalogPage' page is loaded
 	When I click on 'electronics' element
 	Then I verify that elements are displayed:
-		| element1                         | element2 | element3       |
-		| mobilePhones&accessories_INVALID | tv&video | tablets&ebooks |
+		| element1 | element2                         | element3       |
+		| tv&video | mobilePhones&accessories_INVALID | tablets&ebooks |
 	When I move cursor to 'mobilePhones&accessories_INVALID' element
 	And I click on 'mobilePhones' element
 	Then I verify that 'MobilePhonesPage' page is loaded

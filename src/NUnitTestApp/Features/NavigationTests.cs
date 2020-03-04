@@ -27,7 +27,7 @@ namespace NUnitTestApp.Features
             PageActions.NavigateToPage("https://catalog.onliner.by/");
             PageActions.VerifyPageIsLoaded("catalogPage");
             PageActions.ElementClick("electronics");
-            PageActions.VerifyElementsAreDisplayed("mobilePhones&accessories_INVALID/tv&video/tablets&ebooks".Split('/').ToList());
+            PageActions.VerifyElementsAreDisplayed("tv&video/mobilePhones&accessories_INVALID/tablets&ebooks".Split('/').ToList());
             PageActions.MoveCursorToElement("mobilePhones&accessories");
             PageActions.ElementClick("mobilePhones");
             PageActions.VerifyPageIsLoaded("MobilePhonesPage");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Allure.Commons;
 using Allure.NUnit.Attributes;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -70,29 +71,18 @@ namespace TestFramework.PageActions
             }
         }
 
-        [AllureStep("Set element '&elementName&' selected state into ")]
+        // [AllureStep("Set element '&elementName&' selected state into ")]
         public void SetElementSelectedState(string elementName, bool state)
         {
-            var element = _webPage.GetWebElement(elementName);
-
-            if (element.Selected != state)
+            //TODO: workaround because [AllureStep] annotation and 
+            AllureLifecycle.Instance.RunStep($"Set element '{elementName}' selected state into '{state}'", () =>
             {
-                ElementClick(element, elementName);
-            }
-        }
-
-        [AllureStep("Set element '&elementName&' selected state into '&state&'")]
-        public void SetElementSelectedState_TEMP(string elementName, bool state)
-        {
-            var element = _webPage.GetWebElement(elementName);
-            var status = element.Enabled;
-            ElementClick(element, elementName);
-            // var st = bool.Parse(state);
-
-            // if (element.Selected != st)
-            // {
-            //     ElementClick(element, elementName);
-            // }
+                var element = _webPage.GetWebElement(elementName);
+                if (element.Selected != state)
+                {
+                    ElementClick(element, elementName);
+                }
+            });
         }
 
         [AllureStep("Type text '&text&' into element '&elementName&'")]

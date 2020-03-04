@@ -21,12 +21,14 @@ namespace SpecFlowTestApp.Features
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
     [NUnit.Framework.DescriptionAttribute("AllSteps")]
+    [NUnit.Framework.CategoryAttribute("ignoreFeature")]
     public partial class AllStepsFeature
     {
         
         private TechTalk.SpecFlow.ITestRunner testRunner;
         
-        private string[] _featureTags = ((string[])(null));
+        private string[] _featureTags = new string[] {
+                "ignoreFeature"};
         
 #line 1 "AllSteps.feature"
 #line hidden
@@ -35,7 +37,8 @@ namespace SpecFlowTestApp.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "AllSteps", "\tThe scenario contains the list of all implemented steps", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "AllSteps", "\tThe scenario contains the list of all implemented steps", ProgrammingLanguage.CSharp, new string[] {
+                        "ignoreFeature"});
             testRunner.OnFeatureStart(featureInfo);
         }
         
